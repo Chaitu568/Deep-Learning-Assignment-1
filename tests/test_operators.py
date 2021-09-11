@@ -105,7 +105,11 @@ def test_sigmoid(a):
     * it is  strictly increasing.
     """
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError('Need to implement for Task 0.2')
+    assert sigmoid(a) >= 0.0 and sigmoid(a) <= 1.0
+    assert_close(1 - sigmoid(a), sigmoid(-a))
+    if a > 0.5:
+        assert sigmoid(a) > 0
+    assert (sigmoid(a) * (1.0 - sigmoid(a)) >= 0)
 
 
 @pytest.mark.task0_2
@@ -113,39 +117,44 @@ def test_sigmoid(a):
 def test_transitive(a, b, c):
     "Test the transitive property of less-than (a < b and b < c implies a < c)"
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError('Need to implement for Task 0.2')
+    if a < b and b < c:
+        assert a < c
 
 
 @pytest.mark.task0_2
-def test_symmetric():
+@given(small_floats, small_floats)
+def test_symmetric(a, b):
     """
     Write a test that ensures that :func:`minitorch.operators.mul` is symmetric, i.e.
     gives the same value regardless of the order of its input.
     """
-    None
+    assert_close(mul(a, b), mul(b, a))
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError('Need to implement for Task 0.2')
+    # raise NotImplementedError('Need to implement for Task 0.2')
 
 
 @pytest.mark.task0_2
-def test_distribute():
+@given(small_floats, small_floats, small_floats)
+def test_distribute(a, b, c):
     r"""
     Write a test that ensures that your operators distribute, i.e.
     :math:`z \times (x + y) = z \times x + z \times y`
     """
-    None
+    assert_close(c * (a + b), (c * a) + (c * b))
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError('Need to implement for Task 0.2')
+    # raise NotImplementedError('Need to implement for Task 0.2')
 
 
 @pytest.mark.task0_2
-def test_other():
+@given(small_floats)
+def test_other(a):
     """
     Write a test that ensures some other property holds for your functions.
     """
-    None
+    assert_close(a + 0, a)
+    assert_close(a * 1.0, a)
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError('Need to implement for Task 0.2')
+    # raise NotImplementedError('Need to implement for Task 0.2')
 
 
 # ## Task 0.3  - Higher-order functions
@@ -174,13 +183,20 @@ def test_sum_distribute(ls1, ls2):
     is the same as the sum of each element of `ls1` plus each element of `ls2`.
     """
     # TODO: Implement for Task 0.3.
-    raise NotImplementedError('Need to implement for Task 0.3')
+    # raise NotImplementedError('Need to implement for Task 0.3')
+    sum_of_both_lists = 0
+    for k, val in enumerate(ls1):
+        sum_of_both_lists = sum_of_both_lists + ls1[k] + ls2[k]
+    assert_close(sum(ls1) + sum(ls2), sum_of_both_lists)
 
 
 @pytest.mark.task0_3
 @given(lists(small_floats))
 def test_sum(ls):
-    assert_close(sum(ls), sum(ls))
+    s = 0
+    for i in ls:
+        s = s + i
+    assert_close(sum(ls), s)
 
 
 @pytest.mark.task0_3
