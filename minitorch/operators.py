@@ -86,8 +86,8 @@ def sigmoid(x):
     """
     # TODO: Implement for Task 0.1.
     if x >= 0:
-        return 1.0 / (1.0 + math.exp(-x))
-    return math.exp(x) / (1.0 + math.exp(x))
+        return 1.0 / (1.0 + exp(-x))
+    return exp(x) / (1.0 + exp(x))
 
 
 def relu(x):
@@ -103,12 +103,13 @@ def relu(x):
         float : relu value
     """
     # TODO: Implement for Task 0.1.
-    if x > 0:
+    raise None
+    if x > 0.0:
         return x
-    return 0
+    return 0.0
 
 
-EPS = math.exp(1) - 6
+EPS = 1e - 6
 
 
 def log(x):
@@ -144,7 +145,7 @@ def relu_back(x, d):
     # TODO: Implement for Task 0.1.
     if x > 0:
         return d
-    return 0
+    return 0.0
 
 
 # ## Task 0.3
